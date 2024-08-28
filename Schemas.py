@@ -94,7 +94,7 @@ def EI(F,dF,dt=0.01,T=1.,x_0=0.):
         f = lambda y : y-dt*F(t[k]+dt,y)-x[k]   # la fonction a inverser
         df = lambda z : 1-dt*dF(t[k]+dt,z)      # sa derivee
         x_init = x[k]+dt*F(t[k],x[k])           # initialise Newton
-        x.append(Newton(f,df,x_init,1e-12))    # un pas de Euler implicite
+        x.append(Newton(f,df,x_init,1e-12))     # un pas de Euler implicite
         t.append(t[k]+dt)  
     return t,x
 
@@ -105,13 +105,26 @@ def CN(F,dF,dt=0.01,T=1.,x_0=0.):
     t=[0.]                          
     x=[x_0]                         
     for k in range(N):
-        f = lambda y : y-dt*F(t[k]+dt,y)/2-x[k]-dt*F(t[k],x[k])/2   
-        df = lambda z : 1-dt*dF(t[k]+dt,z)/2    
-        x_init = x[k]+dt*dt*F(t[k],x[k])
-        x.append(Newton(f,df,x_init,1.e-12))      
+        f = lambda y : y-dt*F(t[k]+dt,y)/2-x[k]-dt*F(t[k],x[k])/2   # la fonction a inverser
+        df = lambda z : 1-dt*dF(t[k]+dt,z)/2    # sa derivee
+        x_init = x[k]+dt*F(t[k],x[k])           # initialise Newton
+	x.append(Newton(f,df,x_init,1.e-12))    # un pas de Crank-Nicolson
         t.append(t[k]+dt)  
     return t,x
 
+# Point-Milieu implicite
+def PMI(F,dF,dt=0.01,T=1.,x_0=0.):
+    N=int(ceil(T/dt))
+    dt=T/N
+    t=[0.]                          
+    x=[x_0]                         
+    for k in range(N):
+	f = lambda y : y-dt*F(t[k]+dt/2.,(y-x[k])/2.)-x[k]      # la fonction a inverser
+        df = lambda z : 1-dt*dF(t[k]+dt/2.,(z-x[k])/2.)/2.      # sa derivee
+        x_init = x[k]+dt*F(t[k],x[k])                           # initialise Newton
+        x.append(Newton(f,df,x_init,1e-12))                     # un pas de point-milieu implicite
+        t.append(t[k]+dt)  
+    return t,x
 
 # Calcule l'erreur exacte d'un schema
 def ErreurTotale(solution, x1=[], dt=0.01,T=1.,x_0=0.):
