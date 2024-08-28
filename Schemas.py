@@ -108,7 +108,7 @@ def CN(F,dF,dt=0.01,T=1.,x_0=0.):
         f = lambda y : y-dt*F(t[k]+dt,y)/2-x[k]-dt*F(t[k],x[k])/2   # la fonction a inverser
         df = lambda z : 1-dt*dF(t[k]+dt,z)/2    # sa derivee
         x_init = x[k]+dt*F(t[k],x[k])           # initialise Newton
-	x.append(Newton(f,df,x_init,1.e-12))    # un pas de Crank-Nicolson
+        x.append(Newton(f,df,x_init,1.e-12))    # un pas de Crank-Nicolson
         t.append(t[k]+dt)  
     return t,x
 
@@ -119,7 +119,7 @@ def PMI(F,dF,dt=0.01,T=1.,x_0=0.):
     t=[0.]                          
     x=[x_0]                         
     for k in range(N):
-	f = lambda y : y-dt*F(t[k]+dt/2.,(y-x[k])/2.)-x[k]      # la fonction a inverser
+        f = lambda y : y-dt*F(t[k]+dt/2.,(y-x[k])/2.)-x[k]      # la fonction a inverser
         df = lambda z : 1-dt*dF(t[k]+dt/2.,(z-x[k])/2.)/2.      # sa derivee
         x_init = x[k]+dt*F(t[k],x[k])                           # initialise Newton
         x.append(Newton(f,df,x_init,1e-12))                     # un pas de point-milieu implicite
