@@ -132,7 +132,7 @@ def ErreurTotale(solution, x1=[], dt=0.01,T=1.,x_0=0.):
     dt=T/N
     Error=0.
     for k in range(len(x1)):
-        Error+=max(Error,abs(x1[k]-solution(k*dt,x_0)))
+        Error=max(Error,abs(x1[k]-solution(k*dt,x_0)))
     return Error
 
 
@@ -190,7 +190,7 @@ def TraceErreur(dt=1.,T=1.,K=18,x_0=1.):
 def ErreurEmpirique(x1=[], x2=[]):
     Error=0.
     for k in range(len(x1)-1):
-        Error+=max(Error,abs(x1[k]-x2[2*k]))
+        Error=max(Error,abs(x1[k]-x2[2*k]))
     return Error
 
 # Trace les erreurs empiriques en fonction de Delta_t sur une échelle log-log
