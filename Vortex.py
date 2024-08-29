@@ -45,6 +45,8 @@ T=21400*dt
 t, Vort = Sc.RK4(F,0,dt,T,Vor)
 
 #SaveScreenShots(t,Vort)
+
+# Plot the orbits :
 cla()
 ax = plt.gca()
 ax.set_aspect('equal')
