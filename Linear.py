@@ -6,7 +6,7 @@ Created on Mon Aug 26 13:35:18 2024
 """
 
 from pylab import *
-from Schemas.py import *
+from Schemas import *
 
 # Le choix du champ de vitesse F :
 def F(t,x):
@@ -34,4 +34,4 @@ x_sol=[Solution(n*1e-4,x_0) for n in range(int(ceil(1e4*T)))] #solution exacte
 plot(t_sol,x_sol,'r')
 plot(t,x,'.b')
 
-print(ErreurEmpirique(RK4(F,2e-4,1.,1.)[1],RK4(F,1.e-4,1.,1.)[1]))
+print(ErreurEmpirique(RK4(F,2e-1,1.,1.)[1],RK4(F,1.e-1,1.,1.)[1]))
