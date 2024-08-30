@@ -45,13 +45,13 @@ def SaveScreenShots(t,Vort,N=-1): # Save N screenshots of the dynamics
                 ax.set_aspect('equal')
                 xlim(-3,3)
                 ylim(-3,3)
-                for i in range(len(Vor)):
+                for i in range(len(Vor)-1):
                     plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
                 savefig('Screen-'+str(k))
                 
-for k in range(300):
+for k in range(30):
     addVortex(0.,0.,0.,2.,1.)
-for k in range(5000):
+for k in range(50):
     addVortex(0.,0.,0.,4.,-1.)
                 
 dt=0.02
