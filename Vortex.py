@@ -4,8 +4,9 @@ from pylab import *
 import numpy as np
 import sys
 import Schemas as Sc
+import datetime
 import random
-random.seed(0)
+random.seed(10)
 
  # Une liste de points-vortex. Les vortex auto similaires : np.array([[1.,sqrt(2),-1.],[-1.,0.,2.],[1.,0.,2.]]) 
 global Vor
@@ -36,7 +37,11 @@ def F(t,Vor):
             VorVel[j]+=Vor[i][2]*(J(Vor[j]-Vor[i]))/DistSquare
     return VorVel
 
-def SaveScreenShots(t,Vort,N=-1): # Save N screenshots of the dynamics
+def NowToStr():
+    dat=str(datetime.datetime.now())[:22]
+    return dat[0:13]+'-'+dat[14:16]+'-'+dat[17:19]+'-'+dat[20:22]
+
+def SaveScreenShots(t,Vort,N=-1,title=NowToStr()): # Save N screenshots of the dynamics
     if N==-1:
         for k in range(len(t)):
             if True:
@@ -47,14 +52,14 @@ def SaveScreenShots(t,Vort,N=-1): # Save N screenshots of the dynamics
                 ylim(-3,3)
                 for i in range(len(Vor)-1):
                     plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
-                savefig('Screen-'+str(k))
+                savefig(title+' '+str(k))
                 
-for k in range(30):
+for k in range(300):
     addVortex(0.,0.,0.,2.,1.)
-for k in range(50):
+for k in range(1000):
     addVortex(0.,0.,0.,4.,-1.)
                 
-dt=0.02
+dt=0.05
 T=200*dt
 
 t, Vort = Sc.RK4(F,0,dt,T,Vor)
