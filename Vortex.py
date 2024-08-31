@@ -6,7 +6,7 @@ import sys
 import Schemas as Sc
 import datetime
 import random
-random.seed(10)
+random.seed(datetime.datetime.now())
 
  # Une liste de points-vortex. Les vortex auto similaires : np.array([[1.,sqrt(2),-1.],[-1.,0.,2.],[1.,0.,2.]]) 
 global Vor
@@ -56,7 +56,7 @@ def SaveScreenShots(t,Vort,N=-1,title=NowToStr()): # Save N screenshots of the d
                 
 for k in range(300):
     addVortex(0.,0.,0.,2.,1.)
-for k in range(1000):
+for k in range(2000):
     addVortex(0.,0.,0.,4.,-1.)
                 
 dt=0.05
