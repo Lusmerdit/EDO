@@ -6,7 +6,7 @@ import sys
 import Schemas as Sc
 import datetime
 import random
-random.seed(datetime.datetime.now())
+random.seed(int(str(datetime.datetime.now())[20:]))
 
  # Une liste de points-vortex. Les vortex auto similaires : np.array([[1.,sqrt(2),-1.],[-1.,0.,2.],[1.,0.,2.]]) 
 global Vor
