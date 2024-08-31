@@ -15,7 +15,7 @@ Vor=[]
 def addVortex(x=0.,y=0.,a=0., rand_position=-1, rand_circulation=-1):
     if rand_position>0:
         x=random.uniform(-rand_position,rand_position)
-        y=random.gauss(-rand_position,rand_position)
+        y=random.uniform(-rand_position,rand_position)
     if rand_circulation>0:
         a=random.gauss(0.,rand_circulation)
     Vor.append(np.array([x,y,a]))
@@ -44,22 +44,30 @@ def NowToStr():
 def SaveScreenShots(t,Vort,N=-1,title=NowToStr()): # Save N screenshots of the dynamics
     if N==-1:
         for k in range(len(t)):
-            if True:
-                cla()
-                ax = plt.gca()
-                ax.set_aspect('equal')
-                xlim(-3,3)
-                ylim(-3,3)
-                for i in range(len(Vor)-1):
-                    plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
-                savefig(title+' '+str(k))
+            cla()
+            ax = plt.gca()
+            ax.set_aspect('equal')
+            xlim(-3,3)
+            ylim(-3,3)
+            for i in range(len(Vor)-1):
+                plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
+            savefig(title+' '+str(k))
                 
 for k in range(300):
     addVortex(0.,0.,0.,2.,1.)
-for k in range(2000):
+for k in range(3000):
     addVortex(0.,0.,0.,4.,-1.)
+
+cla()
+ax = plt.gca()
+ax.set_aspect('equal')
+xlim(-3,3)
+ylim(-3,3)
+
+for i in range(len(Vor)-1):
+    plot([Vor[i][0]],[Vor[i][1]],'.k')
                 
-dt=0.05
+dt=0.02
 T=200*dt
 
 t, Vort = Sc.RK4(F,0,dt,T,Vor)
