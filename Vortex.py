@@ -32,9 +32,10 @@ def F(t,Vor):
     VorVel=np.array([[0.,0.,0.] for i in range(Number)])
     for i in range(Number):
         for j in range(i):
-            DistSquare=NormSquare(Vor[i]-Vor[j],0.1)
-            VorVel[i]+=Vor[j][2]*(J(Vor[i]-Vor[j]))/DistSquare
-            VorVel[j]+=Vor[i][2]*(J(Vor[j]-Vor[i]))/DistSquare
+            if abs(Vor[j][2])+abs(Vor[i][2])>1.e-13:
+                DirVect=(J(Vor[i]-Vor[j]))/NormSquare(Vor[i]-Vor[j],0.1)
+                VorVel[i]+=Vor[j][2]*DirVect
+                VorVel[j]-=Vor[i][2]*DirVect
     return VorVel
 
 def NowToStr():
@@ -53,19 +54,19 @@ def SaveScreenShots(t,Vort,N=-1,title=NowToStr()): # Save N screenshots of the d
                 plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
             savefig(title+' '+str(k))
                 
-for k in range(300):
+for k in range(100):
     addVortex(0.,0.,0.,2.,1.)
 for k in range(3000):
-    addVortex(0.,0.,0.,4.,-1.)
+    addVortex(0.,0.,0.,6.,-1.)
 
-cla()
-ax = plt.gca()
-ax.set_aspect('equal')
-xlim(-3,3)
-ylim(-3,3)
+# cla()
+# ax = plt.gca()
+# ax.set_aspect('equal')
+# xlim(-3,3)
+# ylim(-3,3)
 
-for i in range(len(Vor)-1):
-    plot([Vor[i][0]],[Vor[i][1]],'.k')
+# for i in range(len(Vor)-1):
+#     plot([Vor[i][0]],[Vor[i][1]],'.k')
                 
 dt=0.02
 T=200*dt
