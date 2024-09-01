@@ -54,9 +54,9 @@ def SaveScreenShots(t,Vort,N=-1,title=NowToStr()): # Save N screenshots of the d
                 plot([Vort[k][i][0]],[Vort[k][i][1]],'.k')
             savefig(title+' '+str(k))
                 
-for k in range(100):
+for k in range(200):
     addVortex(0.,0.,0.,2.,1.)
-for k in range(3000):
+for k in range(5000):
     addVortex(0.,0.,0.,6.,-1.)
 
 # cla()
