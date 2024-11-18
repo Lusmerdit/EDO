@@ -39,7 +39,6 @@ def RK4(F,dF,dt=0.01,T=1.,x_0=0.):
     t=[0.]                          
     x=[x_0]                         
     for k in range(N):
-        print(k)
         k1 = F(t[k], x[k])
         k2 = F(t[k]+dt/2, x[k]+dt*k1/2)
         k3 = F(t[k]+dt/2, x[k]+dt*k2/2)
