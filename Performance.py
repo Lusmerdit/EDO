@@ -17,12 +17,13 @@ def Solution(t,x_0):
     return (x_0+1./5)*exp(-3.*t)+sin(9.*t)/15-cos(9*t)/5
 
 # Liste des schémas numériques
-schemas = {"EE", "EI","CN", "Heun", "RK3", "RK4", "AB2", "PMI"}
+schemas = ["EE", "EI", "Heun","PMI", "CN", "AB2", "RK3", "RK4", ]
 
 # Erreur attendue pour résoudre cette équation :
 epsilon =1.e-9
+print("Epsilon = ", epsilon)
 
-# temps d'execution et autre paramètres
+# temps d'execution et autres paramètres
 elapsed = 0.
 dt=2.e-6
 T=1.
@@ -33,7 +34,7 @@ dt=T/N
 
 # Ajustement du pas de temps optimal pour chaque schema
 for schema in schemas:
-    dt=1. 
+    dt=1.
     error=1.
     while(error>=epsilon):
         dt/=10.
@@ -48,7 +49,7 @@ for schema in schemas:
         error = ErreurTotale(Solution,x, dt,T,x_0)
     print("Schema = "+schema)
     print(f'Pas de temps opitmal = {dt:.1}')
-    print(f'Temps d\'exécution = {elapsed:.3}s')    
+    print(f'Temps d\'exécution = {elapsed:.6}s')    
     print()
 
 
