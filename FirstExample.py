@@ -7,7 +7,7 @@ Created on Mon Nov 18 13:59:37 2024
 
 from pylab import *             # Importation de la bibliotheque maths
 
-dt=0.005                        # Le pas de temps
+dt=0.05                        # Le pas de temps
 T=1.                            # Le temps final
 N=int(ceil(T/dt))               # Le nombre d'iteration (entier)
 dt=T/N                          # Petite correction pour avoir T=N*dt

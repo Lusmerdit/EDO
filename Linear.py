@@ -22,7 +22,7 @@ def Solution(t,x_0):
 solve = RK4
 
 # Paramètres pour l'intégration numérique
-dt=2.e-2
+dt=2.e-4
 T=1.
 x_0=1.
 N=int(ceil(T/dt))
@@ -38,12 +38,14 @@ plot(t_sol,x_sol,'r') #tracé de la solution exacte
 plot(t,x,'.b') #tracé de la solution numérique
 savefig('plot.png')
 
+#sys.exit()
+
 
 # Calcul de l'erreur exacte
 print(ErreurTotale(Solution,x, dt,T,x_0))
-
+sys.exit()
 # Calcul de l'erreur approchée
-x2=solve(F,dF,dt/2.,1.,1.)[1]
+#x2=solve(F,dF,dt/2.,1.,1.)[1]
 print(ErreurEmpirique(x,x2))
 
 # Calcul de l'ordre empirique approché

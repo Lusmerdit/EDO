@@ -91,7 +91,7 @@ def EI(F,dF,dt=0.01,T=1.,x_0=0.):
     t=[0.]                          
     x=[x_0]                         
     for k in range(N):
-        f = lambda y : y-dt*F(t[k]+dt,y)-x[k]   # la fonction a inverser
+        f = lambda y : y-dt*F(t[k]+dt,y)-x[k]   # la fonction dont on cherche le zéro
         df = lambda z : 1-dt*dF(t[k]+dt,z)      # sa derivee
         x_init = x[k]+dt*F(t[k],x[k])           # initialise Newton
         x.append(Newton(f,df,x_init,1e-12))     # un pas de Euler implicite
@@ -105,7 +105,7 @@ def CN(F,dF,dt=0.01,T=1.,x_0=0.):
     t=[0.]                          
     x=[x_0]                         
     for k in range(N):
-        f = lambda y : y-dt*F(t[k]+dt,y)/2-x[k]-dt*F(t[k],x[k])/2   # la fonction a inverser
+        f = lambda y : y-dt*F(t[k]+dt,y)/2-x[k]-dt*F(t[k],x[k])/2   # la fonction dont on cherche le zéro
         df = lambda z : 1-dt*dF(t[k]+dt,z)/2    # sa derivee
         x_init = x[k]+dt*F(t[k],x[k])           # initialise Newton
         x.append(Newton(f,df,x_init,1.e-12))    # un pas de Crank-Nicolson
@@ -138,7 +138,7 @@ def ErreurTotale(solution, x1=[], dt=0.01,T=1.,x_0=0.):
 
 
 # Trace les erreurs empiriques en fonction de Delta_t sur une échelle log-log
-def TraceErreur(dt=1.,T=1.,K=18,x_0=1.):
+def TraceErreur(F,dF,Solution,dt=1.,T=1.,K=18,x_0=1.):
     
     # Variables pour stocker les résultats de l'algorithme
     Dt=[]
@@ -194,15 +194,16 @@ def ErreurEmpirique(x1=[], x2=[]):
     return Error
 
 # Trace les erreurs empiriques en fonction de Delta_t sur une échelle log-log
-def TraceErreurApprox(dt=0.2,T=1.,K=15):
+def TraceErreurApprox(F,dF,dt=0.2,T=1.,K=15):
     
     # Initialisation avec le plus grand pas de temps
-    x_EE=EE(F,dt,T,1.)[1]
+    x_EE=EE(F,dF,dt,T,1.)[1]
     x_EI=EI(F,dF,dt,T,1.)[1]
     x_CN=CN(F,dF,dt,T,1.)[1]
-    x_RK4=RK4(F,dt,T,1.)[1]
-    x_H=Heun(F,dt,T,1.)[1]
-    x_AB2=AB2(F,dt,T,1.)[1]
+    x_RK4=RK4(F,dF,dt,T,1.)[1]
+    x_H=Heun(F,dF,dt,T,1.)[1]
+    x_AB2=AB2(F,dF,dt,T,1.)[1]
+    x_RK3=RK3(F,dF,dt,T,1.)[1]
     
     # Variables pour stocker les résultats de l'algorithme
     Dt=[]
@@ -212,6 +213,7 @@ def TraceErreurApprox(dt=0.2,T=1.,K=15):
     E_RK4=[]
     E_H=[]
     E_AB2=[]
+    E_RK3=[]
     
     for k in range(K):
         print(k)
@@ -219,12 +221,13 @@ def TraceErreurApprox(dt=0.2,T=1.,K=15):
         Dt.append(dt)
         dt=dt/2.
         
-        x_EE_2=EE(F,dt,T,1.)[1]
+        x_EE_2=EE(F,dF,dt,T,1.)[1]
         x_EI_2=EI(F,dF,dt,T,1.)[1]
         x_CN_2=CN(F,dF,dt,T,1.)[1]
-        x_RK4_2=RK4(F,dt,T,1.)[1]
-        x_H_2=Heun(F,dt,T,1.)[1]
-        x_AB2_2=AB2(F,dt,T,1.)[1]
+        x_RK4_2=RK4(F,dF,dt,T,1.)[1]
+        x_H_2=Heun(F,dF,dt,T,1.)[1]
+        x_AB2_2=AB2(F,dF,dt,T,1.)[1]
+        x_RK3_2=RK3(F,dF,dt,T,1.)[1]
         
         E_EE.append(ErreurEmpirique(x_EE,x_EE_2))
         E_EI.append(ErreurEmpirique(x_EI,x_EI_2))
@@ -232,6 +235,7 @@ def TraceErreurApprox(dt=0.2,T=1.,K=15):
         E_RK4.append(ErreurEmpirique(x_RK4,x_RK4_2))
         E_H.append(ErreurEmpirique(x_H,x_H_2))
         E_AB2.append(ErreurEmpirique(x_AB2,x_AB2_2))  
+        E_RK3.append(ErreurEmpirique(x_RK3,x_RK3_2))  
         
         x_EE=x_EE_2
         x_EI=x_EI_2
@@ -239,8 +243,9 @@ def TraceErreurApprox(dt=0.2,T=1.,K=15):
         x_RK4=x_RK4_2
         x_H=x_H_2
         x_AB2=x_AB2_2
+        x_RK3=x_RK3_2
     
-    return Dt, E_EE, E_EI, E_CN, E_RK4, E_H, E_AB2
+    return Dt, E_EE, E_EI, E_CN, E_RK4, E_H, E_AB2, E_RK3
         
  
 #Dt, E_EE, E_EI, E_CN, E_RK4, E_H, E_AB2=TraceErreurApprox()

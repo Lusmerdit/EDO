@@ -17,10 +17,10 @@ def Solution(t,x_0):
     return (x_0+1./5)*exp(-3.*t)+sin(9.*t)/15-cos(9*t)/5
 
 # Choix du schéma numérique : EE, EI, CN, Heun, RK3, RK4, AB2, PMI
-solve = EE
+solve = EI
 
 # Paramètres pour l'intégration numérique
-dt=2.e-6
+dt=2.e-5
 T=1.
 x_0=1.
 N=int(ceil(T/dt))
@@ -36,4 +36,4 @@ t,x=solve(F,dF,dt,T,x_0) # solution numérique
 end = time()
 elapsed = end - start
 
-print(f'Temps d\'exécution : {elapsed:.3}s')
+print(f'Temps d\'exécution : {elapsed:.6}s')
