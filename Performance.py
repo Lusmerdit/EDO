@@ -20,7 +20,7 @@ def Solution(t,x_0):
 schemas = ["EE", "EI", "Heun","PMI", "CN", "AB2", "RK3", "RK4", ]
 
 # Erreur attendue pour résoudre cette équation :
-epsilon =1.e-9
+epsilon =1.e-6
 print("Epsilon = ", epsilon)
 
 # temps d'execution et autres paramètres

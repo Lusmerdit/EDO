@@ -8,24 +8,24 @@ mu =1.
 
 # Le choix du champ de vitesse F :
 def F(t,x):
-    return -3*lam*x+2*lam*sin(9*t)
+    return -3*mu*x+2*mu*sin(9*t)
 
 
 # Le calcul de sa derivee (pour Newton) :
 def dF(t,x):
-    return -3*lam
+    return -3*mu
 
 # Solution exacte de l'EDO
 def Solution(t,x_0):
-    return (x_0+1./5)*exp(-3.*t)+sin(9.*t)/15-cos(9*t)/5
+    return (((3*mu*mu+27)*x_0+6*mu)*exp(-3*mu*t)+2*mu*mu*sin(9*t)-6*mu*cos(9*t))/(3*mu*mu+27)
 
 
 # Choix du schéma numérique : EE, EI, CN, Heun, RK3, RK4, AB2, PMI
-solve = AB2
+solve = EI
 
 # Paramètres pour l'intégration numérique
-dt=2.e-2
-T=1.
+dt=1
+T=20.
 x_0=1.
 N=int(ceil(T/dt))
 dt=T/N
@@ -35,10 +35,10 @@ t,x=solve(F,dF,dt,T,x_0) # solution numérique
 
 t_sol=[n*1e-2 for n in range(int(ceil(1e2*T)))]
 x_sol=[Solution(n*1e-2,x_0) for n in range(int(ceil(1e2*T)))] #solution exacte
-plot(t_sol,x_sol,'r') #tracé de la solution exacte
+plot(t_sol,x_sol,'0.5') #tracé de la solution exacte
 #cla()
-plot(t,x,'.b') #tracé de la solution numérique
-savefig('plot.png')
+plot(t,x,'.k') #tracé de la solution numérique
+savefig('plot.png',dpi=200)
 
 sys.exit()
 

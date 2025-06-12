@@ -33,8 +33,8 @@ if exact :
     loglog(dt,e_h,'o-k')
     loglog(dt,e_ab2,'s-k')
     loglog(dt,e_rk3,'-k')
-    #loglog(dt,e_rk4,'.m')
-    savefig("save.png")
+    #loglog(dt,e_rk4,'m')
+    savefig("save.png",dpi=200)
 
 else :
     dt, e_ee, e_ei, e_cn, e_rk4, e_h, e_ab2, e_rk3 =TraceErreurApprox(F,dF)

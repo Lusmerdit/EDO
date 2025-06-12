@@ -36,4 +36,12 @@ t,x=solve(F,dF,dt,T,x_0) # solution numérique
 end = time()
 elapsed = end - start
 
+
+t_sol=[n*1e-2 for n in range(int(ceil(1e2*T)))]
+x_sol=[Solution(n*1e-2,x_0) for n in range(int(ceil(1e2*T)))] #solution exacte
+plot(t_sol,x_sol,'0.5') #tracé de la solution exacte
+#cla()
+plot(t,x,'.k') #tracé de la solution numérique
+
+
 print(f'Temps d\'exécution : {elapsed:.6}s')
